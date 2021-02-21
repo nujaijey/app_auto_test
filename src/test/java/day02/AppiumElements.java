@@ -27,7 +27,20 @@ public class AppiumElements {
         // 不支持findElementByName方法（弃用）
 //        androidDriver.findElementByName("全程班").click();
         // 不支持解决方法：使用UIAutomator定位text
-        androidDriver.findElementByAndroidUIAutomator("new UiSelector().text(\"全程班\")").click();
-        Thread.sleep(3000);
+//        androidDriver.findElementByAndroidUIAutomator("new UiSelector().text(\"全程班\")").click();
+//        Thread.sleep(3000);
+        // 登录
+        // 我的柠檬id  com.lemon.lemonban:id/navigation_my
+        androidDriver.findElementById("com.lemon.lemonban:id/navigation_my").click();
+        Thread.sleep(1000);
+        // 点击头像登录id  com.lemon.lemonban:id/fragment_my_lemon_avatar_layout
+        androidDriver.findElementById("com.lemon.lemonban:id/fragment_my_lemon_avatar_layout").click();
+        Thread.sleep(1000);
+        // 手机号码输入框id  com.lemon.lemonban:id/et_mobile
+        androidDriver.findElementById("com.lemon.lemonban:id/et_mobile").sendKeys("13323234545");
+        // 密码输入框id  com.lemon.lemonban:id/et_password
+        androidDriver.findElementById("com.lemon.lemonban:id/et_password").sendKeys("234545");
+        // 登录按钮id  com.lemon.lemonban:id/btn_login
+        androidDriver.findElementByXPath("//android.widget.Button[@index='0']").click();
     }
 }
