@@ -1,12 +1,17 @@
 package day02;
 
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.URL;
+import java.time.Duration;
 
 public class AppiumElements {
+    private static AndroidDriver<WebElement> androidDriver;
     public static void main(String[] args) throws Exception {
         // 初始化配置对象DesiredCapabilities
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
@@ -20,7 +25,7 @@ public class AppiumElements {
         desiredCapabilities.setCapability("appActivity","com.lemon.lemonban.activity.WelcomeActivity");
         // 初始化驱动对象，把这个配置对象信息发送给Appium Server
         // 第一个参数：Appium Server通讯地址 ip:端口；第二个参数：配置信息
-        AndroidDriver<WebElement> androidDriver = new AndroidDriver<WebElement>(new URL("http://127.0.0.1:4723/wd/hub"),desiredCapabilities);
+        androidDriver = new AndroidDriver<WebElement>(new URL("http://127.0.0.1:4723/wd/hub"),desiredCapabilities);
         Thread.sleep(5000);
 
         // text文本值定位方式
@@ -42,5 +47,28 @@ public class AppiumElements {
         androidDriver.findElementById("com.lemon.lemonban:id/et_password").sendKeys("234545");
         // 登录按钮id  com.lemon.lemonban:id/btn_login
         androidDriver.findElementByXPath("//android.widget.Button[@index='0']").click();
+
+    }
+    // 通用的向下滑动的方法
+    public static void SwipeDown() {
+        // 向下滑动手势操作
+        // 1、创建TouchAction对象
+        TouchAction touchAction = new TouchAction(androidDriver);
+        // 2、创建duration对象
+        Duration duration = Duration.ofMillis(300);
+        // 滑动开始点：x轴的值为屏幕宽度的1/2，y轴的值为屏幕高度的1/4
+        int width = androidDriver.manage().window().getSize().getWidth();
+        int height = androidDriver.manage().window().getSize().getHeight();
+        int startX = width/2;
+        int startY = height/4;
+        // 滑动结束点
+        int endX = width/2;
+        int endY = height*3/4;
+        touchAction.press(PointOption.point(startX,startY))  // 按压开始点
+                .waitAction(WaitOptions.waitOptions(duration))  // 设置滑动时间间隔
+                .moveTo(PointOption.point(endX,endY))  // 滑动到结束点
+                .release()  // 抬起手指
+                .perform();  // 生效
+        
     }
 }
