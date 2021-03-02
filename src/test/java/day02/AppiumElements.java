@@ -32,7 +32,8 @@ public class AppiumElements {
         // 不支持findElementByName方法（弃用）
 //        androidDriver.findElementByName("全程班").click();
         // 不支持解决方法：使用UIAutomator定位text
-//        androidDriver.findElementByAndroidUIAutomator("new UiSelector().text(\"全程班\")").click();
+//        androidDriver.findElementByAndroidUIAutomator("new UiSel
+//        ector().text(\"全程班\")").click();
 //        Thread.sleep(3000);
         // 登录
         // 我的柠檬id  com.lemon.lemonban:id/navigation_my
@@ -47,7 +48,22 @@ public class AppiumElements {
         androidDriver.findElementById("com.lemon.lemonban:id/et_password").sendKeys("234545");
         // 登录按钮id  com.lemon.lemonban:id/btn_login
         androidDriver.findElementByXPath("//android.widget.Button[@index='0']").click();
+        Thread.sleep(3000);
+        // 题库id  com.lemon.lemonban:id/navigation_tiku
+        androidDriver.findElementById("com.lemon.lemonban:id/navigation_tiku").click();
+        Thread.sleep(1000);
 
+        // AccessibilityId定位（UIAutomatorViewer没有这个属性，Appium inspector才有）
+//        androidDriver.findElementByAccessibilityId("题库").click();
+
+        // content-desc定位
+//        androidDriver.findElementByAndroidUIAutomator("new UiSelector().description(\"题库\")").click();
+
+        // 坐标定位
+        TouchAction touchAction = new TouchAction(androidDriver);
+        touchAction.tap(PointOption.point(200, 1870)).perform();
+
+//        SwipeDown();
     }
     // 通用的向下滑动的方法
     public static void SwipeDown() {
