@@ -2,9 +2,13 @@ package day02;
 
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.remote.AutomationName;
+import io.appium.java_client.remote.MobileBrowserType;
+import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.URL;
@@ -23,6 +27,8 @@ public class AppiumElements {
         desiredCapabilities.setCapability("appPackage","com.lemon.lemonban");
         // 4、启动应用程序配置信息appActivity
         desiredCapabilities.setCapability("appActivity","com.lemon.lemonban.activity.WelcomeActivity");
+        // 设置automationName为UIAutomator2，支持toast获取
+        desiredCapabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.ANDROID_UIAUTOMATOR2);
         // 初始化驱动对象，把这个配置对象信息发送给Appium Server
         // 第一个参数：Appium Server通讯地址 ip:端口；第二个参数：配置信息
         androidDriver = new AndroidDriver<WebElement>(new URL("http://127.0.0.1:4723/wd/hub"),desiredCapabilities);
@@ -32,8 +38,7 @@ public class AppiumElements {
         // 不支持findElementByName方法（弃用）
 //        androidDriver.findElementByName("全程班").click();
         // 不支持解决方法：使用UIAutomator定位text
-//        androidDriver.findElementByAndroidUIAutomator("new UiSel
-//        ector().text(\"全程班\")").click();
+//        androidDriver.findElementByAndroidUIAutomator("new UiSelector().text(\"全程班\")").click();
 //        Thread.sleep(3000);
         // 登录
         // 我的柠檬id  com.lemon.lemonban:id/navigation_my
