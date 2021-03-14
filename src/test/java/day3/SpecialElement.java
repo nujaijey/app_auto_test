@@ -3,8 +3,14 @@ package day3;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.AutomationName;
 import io.appium.java_client.remote.MobileCapabilityType;
+import org.checkerframework.checker.nullness.compatqual.NullableDecl;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
 
@@ -46,7 +52,27 @@ public class SpecialElement {
         // 登录按钮id  com.lemon.lemonban:id/btn_login
         androidDriver.findElementByXPath("//android.widget.Button[@index='0']").click();
         // 在点击登录之后获取toast信息，可用于做断言
-        String actualToast = androidDriver.findElementByXPath("//*[contains(@text,'错误的账号')]").getText();
-        Thread.sleep(3000);
+//        String actualToast = androidDriver.findElementByXPath("//*[contains(@text,'错误的账号')]").getText();
+        By toastBy = By.xpath("//*[contains(@text,'错误的账号')]");
+        String actualToast = getElement(toastBy).getText();
+        System.out.println(actualToast);
+    }
+
+    /**
+     * 智能等待
+     * @param by
+     * @return 元素
+     */
+    public static WebElement getElement(By by) {
+        // 1、创建WebDriverWait对象
+        WebDriverWait webDriverWait = new WebDriverWait(androidDriver,10);
+        return  webDriverWait.until(new ExpectedCondition<WebElement>() {
+            @NullableDecl
+            @Override
+            public WebElement apply(@NullableDecl WebDriver webDriver) {
+                return androidDriver.findElement(by);
+            }
+        });
+
     }
 }
